@@ -31,8 +31,9 @@
         }
     </style>
     <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular/angular-messages.js"></script>
     <script>
-        angular.module("listaTelefonica", []);
+        angular.module("listaTelefonica", ["ngMessages"]);
         angular.module("listaTelefonica")
             .controller("listaTelefonicaCtrl", function($scope) {
                 $scope.app = "Lista Telefonica"; 
@@ -101,26 +102,17 @@
                 <option value="">Selecione uma Operadora</option>
             </select>
         </form>
-        <div class="alert alert-danger" 
-            ng-show="contatoForm.nome.$error.required && contatoForm.nome.$dirty">
-                Por favor, preencha o nome
+        <div ng-messages="contatoForm.nome.$error"  class="alert alert-danger">
+            <div ng-message="required">Por favor, preencha o nome</div>
+            <div ng-message="minlength">O campo nome deve ter no mínimo 5 caracteres</div>
+            <div ng-message="required">Por favor, preencha o telefone</div>
+            <div ng-message="pattern">O campo telefone deve ter o formato DDDD-DDDD</div>
+            <div ng-message="minlength">O campo nome deve ter no mínimo 9</div>
         </div>
-        <div class="alert alert-danger" 
-            ng-show="contatoForm.nome.$error.minlength && contatoForm.nome.$dirty">
-                O campo nome deve ter no mínimo 5 caracteres
-        </div>
-        <div class="alert alert-danger" 
-            ng-show="contatoForm.telefone.$error.required">
-                Por favor, preencha o telefone
-        </div>
-        <div class="alert alert-danger" 
-            ng-show="contatoForm.telefone.$error.pattern">
-                O campo telefone deve ter o formato DDDD-DDDD
-        </div>
-        <div class="alert alert-danger" 
-            ng-show="contatoForm.telefone.$error.minlength">
-                O campo nome deve ter no mínimo 9
-        </div>
+       
+        
+        
+        
         <button ng-disabled="contatoForm.$invalid" 
             ng-click="adicionarContato(contato);" class="btn btn-block btn-primary">
                 Adicionar Contato
