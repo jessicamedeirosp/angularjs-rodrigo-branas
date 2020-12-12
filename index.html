@@ -95,16 +95,40 @@
             <input type="text" ng-model="contato.nome" class="form-control" name="nome" 
                 placeholder="Nome" ng-required="true" ng-minlength="5"/>
             <input type="text" ng-model="contato.telefone" class="form-control" name="telefone"
-                placeholder="Telefone" ng-required="true" ng-minlength="9" ng-maxlength="11"/>
-            <select ng-model="contato.operadora" class="form-control" 
+                placeholder="Telefone" ng-required="true" ng-minlength="9" ng-pattern="/^\d{4,5}-\d{4}$/"/>
+            <select ng-model="contato.operadora" class="form-control"
                 ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
                 <option value="">Selecione uma Operadora</option>
             </select>
         </form>
-        <div class="alert alert-danger" ng-show="contatoForm.nome.$invalid && contatoForm.nome.$dirty">Por favor, preencha o nome</div>
-        <div class="alert alert-danger" ng-show="contatoForm.telefone.$invalid && contatoForm.telefone.$dirty">Por favor, preencha o telefone</div>
-        <button ng-disabled="contatoForm.$invalid" ng-click="adicionarContato(contato);" class="btn btn-block btn-primary">Adicionar Contato</button>
-        <button ng-click="apagarContatos(contatos);" class="btn btn-block btn-danger" ng-show="isContatoSelecionado(contatos)">Apagar Contatos</button>
+        <div class="alert alert-danger" 
+            ng-show="contatoForm.nome.$error.required && contatoForm.nome.$dirty">
+                Por favor, preencha o nome
+        </div>
+        <div class="alert alert-danger" 
+            ng-show="contatoForm.nome.$error.minlength && contatoForm.nome.$dirty">
+                O campo nome deve ter no mínimo 5 caracteres
+        </div>
+        <div class="alert alert-danger" 
+            ng-show="contatoForm.telefone.$error.required">
+                Por favor, preencha o telefone
+        </div>
+        <div class="alert alert-danger" 
+            ng-show="contatoForm.telefone.$error.pattern">
+                O campo telefone deve ter o formato DDDD-DDDD
+        </div>
+        <div class="alert alert-danger" 
+            ng-show="contatoForm.telefone.$error.minlength">
+                O campo nome deve ter no mínimo 9
+        </div>
+        <button ng-disabled="contatoForm.$invalid" 
+            ng-click="adicionarContato(contato);" class="btn btn-block btn-primary">
+                Adicionar Contato
+        </button>
+        <button ng-click="apagarContatos(contatos);" class="btn btn-block btn-danger" 
+            ng-show="isContatoSelecionado(contatos)">
+                Apagar Contatos
+        </button>
       
     </div>
   
