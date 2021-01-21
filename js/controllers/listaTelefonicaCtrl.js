@@ -1,25 +1,27 @@
 angular.module("listaTelefonica")
-    .controller("listaTelefonicaCtrl", function($scope, $filter, $http) {
+    .controller("listaTelefonicaCtrl", function($scope, contatosAPI, operadorasAPI, serialGenerator) {
         $scope.app = "Lista Telefonica"; 
         $scope.contatos = [];
         $scope.operadoras = [];
         var carregarContatos = function () {
-            $http.get("http://localhost:3412/contatos")
-                .then(function (response){
+            contatosAPI.getContatos().then(
+                function (response){
                     $scope.contatos = response.data;
                 });
         };
         
         var carregarOperadoras = function () {
-            $http.get("http://localhost:3412/operadoras")
-                .then(function (response) {
+            operadorasAPI.getOperadoras().then(
+                function (response) {
                     $scope.operadoras = response.data;
                 });
         };               
 
-        $scope.adicionarContato = function (contato) {
-            $http.post("http://localhost:3412/contatos", contato)
-                .then( function (response) {
+        $scope.adicionarContato = function (contato) {          
+            contato.serial = serialGenerator.generate();
+            contato.data = new Date();
+            contatosAPI.saveContato(contato).then(
+                function (response) {
                     delete $scope.contato;
                     $scope.contatoForm.$setPristine();
                     carregarContatos();
