@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista Telefonica</title>
     <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/ui.css">
     <link rel="stylesheet"  type="text/css" href="css/app.css">
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular/angular-messages.js"></script>
@@ -16,12 +17,16 @@
     <script src="js/services/serialGeneratorService.js"></script>
     <script src="js/filters/nameFilter.js"></script>
     <script src="js/filters/ellipsisFilter.js"></script>
+    <script src="js/directives/uiAlertDirective.js"></script>
     <script src="js/value/configValue.js"></script>
     <script src="js/config/serialGeneratorConfig.js"></script>
 </head>
 <body ng-controller="listaTelefonicaCtrl">
     <div class="jumbotron">
-        <h3 ng-bind="app"></h3>     
+        <h3 ng-bind="app"></h3>  
+
+        <div ui-alert></div>
+        
         <input type="text" class="form-control" ng-model="criterioDeBusca" placeholder="O que você está buscando?"/>
         <table ng-show="contatos.length > 0" class="table">
             <tr>

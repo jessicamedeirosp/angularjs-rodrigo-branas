@@ -4,9 +4,11 @@ angular.module("listaTelefonica")
         $scope.contatos = [];
         $scope.operadoras = [];
         var carregarContatos = function () {
-            contatosAPI.getContatos().then(
-                function (response){
+            contatosAPI.getContatos()
+                .then(function (response){
                     $scope.contatos = response.data;
+                }).catch(function () {
+                    $scope.error = 'Não foi carregar os dados!';
                 });
         };
         
